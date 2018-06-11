@@ -1,0 +1,42 @@
+﻿@model musicapp.user
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>user</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nameuser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameuser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passworduser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passworduser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emailuser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emailuser)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.iduser }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<musicapp.user>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nameuser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passworduser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.emailuser)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nameuser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passworduser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.emailuser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.iduser }) |
+            @Html.ActionLink("Details", "Details", new { id=item.iduser }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.iduser })
+        </td>
+    </tr>
+}
+
+</table>

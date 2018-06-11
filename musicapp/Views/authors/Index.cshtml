@@ -1,0 +1,39 @@
+﻿@model IEnumerable<musicapp.author>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nameauthor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.imageauthor)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nameauthor)
+        </td>
+        <td>
+            <img src="@(item.imageauthor)" alt="Alternate Text" width="80px" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idauthor }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idauthor }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idauthor })
+        </td>
+    </tr>
+}
+
+</table>

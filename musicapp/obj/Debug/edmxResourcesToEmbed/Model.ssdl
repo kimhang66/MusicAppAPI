@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="musicappModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="author">
+    <Key>
+      <PropertyRef Name="idauthor" />
+    </Key>
+    <Property Name="idauthor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameauthor" Type="varchar(max)" Nullable="false" />
+    <Property Name="imageauthor" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="kind">
+    <Key>
+      <PropertyRef Name="idkind" />
+    </Key>
+    <Property Name="idkind" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="namekind" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="singer">
+    <Key>
+      <PropertyRef Name="idsinger" />
+    </Key>
+    <Property Name="idsinger" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="namesinger" Type="varchar(max)" Nullable="false" />
+    <Property Name="imagesinger" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="song">
+    <Key>
+      <PropertyRef Name="idsong" />
+    </Key>
+    <Property Name="idsong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="namesong" Type="varchar(max)" Nullable="false" />
+    <Property Name="imagesong" Type="varchar(max)" Nullable="false" />
+    <Property Name="idsinger" Type="int" Nullable="false" />
+    <Property Name="idauthor" Type="int" Nullable="false" />
+    <Property Name="idkind" Type="int" Nullable="false" />
+    <Property Name="linkgoogle" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="iduser" />
+    </Key>
+    <Property Name="iduser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameuser" Type="varchar(max)" Nullable="false" />
+    <Property Name="passworduser" Type="varchar(max)" Nullable="false" />
+    <Property Name="emailuser" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_song_author">
+    <End Role="author" Type="Self.author" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="author">
+        <PropertyRef Name="idauthor" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idauthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_song_kind">
+    <End Role="kind" Type="Self.kind" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kind">
+        <PropertyRef Name="idkind" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idkind" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_song_singer">
+    <End Role="singer" Type="Self.singer" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="singer">
+        <PropertyRef Name="idsinger" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idsinger" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="musicappModelStoreContainer">
+    <EntitySet Name="author" EntityType="Self.author" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="kind" EntityType="Self.kind" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="singer" EntityType="Self.singer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="song" EntityType="Self.song" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_song_author" Association="Self.FK_song_author">
+      <End Role="author" EntitySet="author" />
+      <End Role="song" EntitySet="song" />
+    </AssociationSet>
+    <AssociationSet Name="FK_song_kind" Association="Self.FK_song_kind">
+      <End Role="kind" EntitySet="kind" />
+      <End Role="song" EntitySet="song" />
+    </AssociationSet>
+    <AssociationSet Name="FK_song_singer" Association="Self.FK_song_singer">
+      <End Role="singer" EntitySet="singer" />
+      <End Role="song" EntitySet="song" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

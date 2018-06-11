@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="musicappModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="author">
+    <Key>
+      <PropertyRef Name="idauthor" />
+    </Key>
+    <Property Name="idauthor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameauthor" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="imageauthor" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="songs" Relationship="Self.FK_song_author" FromRole="author" ToRole="song" />
+  </EntityType>
+  <EntityType Name="kind">
+    <Key>
+      <PropertyRef Name="idkind" />
+    </Key>
+    <Property Name="idkind" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="namekind" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="songs" Relationship="Self.FK_song_kind" FromRole="kind" ToRole="song" />
+  </EntityType>
+  <EntityType Name="playlist">
+    <Key>
+      <PropertyRef Name="idplaylist" />
+    </Key>
+    <Property Name="idplaylist" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameplaylist" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="song" Relationship="Self.detailplaylist" FromRole="playlist" ToRole="song" />
+  </EntityType>
+  <EntityType Name="singer">
+    <Key>
+      <PropertyRef Name="idsinger" />
+    </Key>
+    <Property Name="idsinger" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="namesinger" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="imagesinger" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="songs" Relationship="Self.FK_song_singer" FromRole="singer" ToRole="song" />
+  </EntityType>
+  <EntityType Name="song">
+    <Key>
+      <PropertyRef Name="idsong" />
+    </Key>
+    <Property Name="idsong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="namesong" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="imagesong" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idsinger" Type="Int32" Nullable="false" />
+    <Property Name="idauthor" Type="Int32" Nullable="false" />
+    <Property Name="idkind" Type="Int32" Nullable="false" />
+    <Property Name="linkgoogle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="author" Relationship="Self.FK_song_author" FromRole="song" ToRole="author" />
+    <NavigationProperty Name="kind" Relationship="Self.FK_song_kind" FromRole="song" ToRole="kind" />
+    <NavigationProperty Name="singer" Relationship="Self.FK_song_singer" FromRole="song" ToRole="singer" />
+    <NavigationProperty Name="playlists" Relationship="Self.detailplaylist" FromRole="song" ToRole="playlist" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="iduser" />
+    </Key>
+    <Property Name="iduser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameuser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="passworduser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="emailuser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_song_author">
+    <End Role="author" Type="Self.author" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="author">
+        <PropertyRef Name="idauthor" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idauthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_song_kind">
+    <End Role="kind" Type="Self.kind" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kind">
+        <PropertyRef Name="idkind" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idkind" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_song_singer">
+    <End Role="singer" Type="Self.singer" Multiplicity="1" />
+    <End Role="song" Type="Self.song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="singer">
+        <PropertyRef Name="idsinger" />
+      </Principal>
+      <Dependent Role="song">
+        <PropertyRef Name="idsinger" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="detailplaylist">
+    <End Role="playlist" Type="Self.playlist" Multiplicity="*" />
+    <End Role="song" Type="Self.song" Multiplicity="0..1" />
+  </Association>
+  <EntityContainer Name="musicappEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="authors" EntityType="Self.author" />
+    <EntitySet Name="kinds" EntityType="Self.kind" />
+    <EntitySet Name="playlists" EntityType="Self.playlist" />
+    <EntitySet Name="singers" EntityType="Self.singer" />
+    <EntitySet Name="songs" EntityType="Self.song" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_song_author" Association="Self.FK_song_author">
+      <End Role="author" EntitySet="authors" />
+      <End Role="song" EntitySet="songs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_song_kind" Association="Self.FK_song_kind">
+      <End Role="kind" EntitySet="kinds" />
+      <End Role="song" EntitySet="songs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_song_singer" Association="Self.FK_song_singer">
+      <End Role="singer" EntitySet="singers" />
+      <End Role="song" EntitySet="songs" />
+    </AssociationSet>
+    <AssociationSet Name="detailplaylist" Association="Self.detailplaylist">
+      <End Role="playlist" EntitySet="playlists" />
+      <End Role="song" EntitySet="songs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
